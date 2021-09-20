@@ -1,0 +1,67 @@
+/* color of navbar brand */
+.container .navbar-brand{
+    color: #2EA5FB;
+}
+
+/* navbar color on hover */
+.container .navbar-brand:hover{
+    color: tomato;
+}
+
+/* moving feather icon animation */
+.container .navbar-brand:hover img{
+    transition: all 600ms ease-in-out;
+    transform:translateX(10px);
+}
+
+.container .navbar-brand:not(hover) img{
+    transition: all 600ms ease-in-out;
+}
+
+/* created a span tage with line classname */
+.container .navbar-brand:hover .line{
+    border-bottom: 1px #ffffff solid;
+    transition: all 600ms ease-in-out;
+}
+
+/* user icon */
+.fa-user{
+    color: white;
+    transform: scale(1.3);
+    border : 1px white solid;
+    border-radius: 30%;
+    padding: 4px;
+    transition: 300ms all ease-in-out;
+}
+
+.fa-user:hover{
+    color: black;
+    background-color: white;
+    transition: 300ms all ease-in-out;
+
+}
+
+/* color navlinks */
+.nav-link{
+    color: tomato !important;
+}
+
+/* placing border when a link is active */
+.nav-link:hover{
+    color : white !important;
+    transition: all 300ms ease-in-out;
+}
+
+.nav-link:not(hover){
+    transition: all 300ms ease-in-out;
+}
+
+.navlink-hover{
+    color : white !important;
+    border-bottom: 1px solid tomato;
+}
+
+/* navbar height */
+.navbar{
+    min-height: 60px;
+}

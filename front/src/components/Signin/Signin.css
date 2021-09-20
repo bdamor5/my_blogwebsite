@@ -1,0 +1,12 @@
+.signin{
+    border-radius: 1%;
+    padding: 1%;
+    width: 50%;
+    margin: 2% auto;
+    background-color:lightsteelblue;
+}
+
+.signin-btn{
+    display: grid;
+    place-items: center;
+}

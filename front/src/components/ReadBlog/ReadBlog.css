@@ -1,0 +1,96 @@
+.write{
+    background-color: aliceblue;
+    margin: 3% auto;
+    padding: 2%;
+}
+
+.read-image{
+    width: 70%;
+    height: 350px;
+}
+
+.upload{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fas{
+    font-size: 70px;
+}
+
+.fas:hover{
+    cursor: pointer;
+    color:#2BA2FA;
+}
+
+.display-image{
+    display: grid;
+    place-items: center;
+    margin: 2% auto 0 auto;
+    width: 100%;
+}
+
+.category-read{
+    margin: 4% auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.category-read h5{
+    background-color: bisque;
+    padding: 0.5%;
+    border-radius: 4%;
+}
+
+.title-read{
+    margin:4% auto;
+    display: flex;
+    justify-content: center;
+    background-color: bisque;
+    padding: 0.5% 3%;
+    border-radius: 4%;
+    width: 50%;
+}
+
+.blogread-content{
+    margin:4% auto;
+    width: 80%;
+    background-color: bisque;
+    padding: 1%;
+    border-radius: 2%;
+}
+
+.blog-content h6{
+    text-transform: capitalize;
+    line-height: 30px;
+    word-spacing: 8px;
+}
+
+.blog-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-delete{
+    margin-left: 5%;
+}
+
+.btn-edit{
+    background-color:greenyellow;
+}
+
+.btn-delete{
+    background-color: red;
+}
+
+@media (max-width : 760px){
+    .title-read h4{
+        font-size:15px;
+    }
+
+    .category-read h5{
+        font-size:15px
+    }
+}

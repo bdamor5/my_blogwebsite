@@ -1,0 +1,11 @@
+.profile{
+    background-color: aliceblue;
+    padding: 1%;
+    text-align: center;
+    color: tomato;
+}
+
+.profile h3{
+    font-weight: bolder;
+    text-transform: capitalize;
+}

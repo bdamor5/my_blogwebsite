@@ -1,0 +1,45 @@
+.write{
+    background-color: aliceblue;
+    margin: 3% auto;
+    padding: 2%;
+}
+
+.fas{
+    font-size: 70px;
+}
+
+.fas:hover{
+    cursor: pointer;
+    color:#2BA2FA;
+}
+
+.display-image{
+    display: grid;
+    place-items: center;
+    margin: 2% auto 0 auto;
+    width: 100%;
+}
+
+.category , .read{
+    margin: 4% auto;
+    width: 40%;
+}
+
+.title{
+    margin:4% auto;
+    width: 60%;
+}
+
+.blog-content{
+    margin:4% auto;
+    width: 80%;
+}
+
+.blog-btn{
+    display: grid;
+    place-items: center;
+}
+
+.btn-create{
+    background-color: gold;
+}

@@ -1,0 +1,68 @@
+.ftr{
+    min-height: 8vh;
+    background-color:#212529;
+    display: flex;
+}
+
+.cpy{
+    color: white;
+}
+
+.top{
+    color: white;
+    background: transparent;
+    font-size: 30px;    
+}
+
+.top:hover{
+    transform: rotateZ(0deg);
+    transition: all 800ms ease-in-out;
+    cursor: pointer;
+}
+
+.top:not(:hover){
+    transform: rotateZ(180deg);
+    transition: all 800ms ease-in-out;
+}
+
+.top-text{
+    color: white;
+    padding:0 100px 0 10px; 
+    font-size: 20px;
+    opacity: 0;      
+}
+
+.top:hover + .top-text{
+    animation-name: top_text_animation1;
+    animation-duration: 1s;
+    animation-fill-mode : forwards;
+}
+
+@keyframes top_text_animation1{
+    0%{
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(-3px);
+        opacity: 1;
+    }   
+}
+
+.top:not(:hover) + .top-text{
+    animation-name: top_text_animation2;
+    animation-duration: 1s;
+    animation-fill-mode : forwards; 
+    /* animation fill mode : forwards => keeps showing top text when our mouse is on the icon */
+}
+
+@keyframes top_text_animation2{
+    0%{
+        transform: translateY(-3px);
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(10px);
+        opacity: 0;
+    }   
+}

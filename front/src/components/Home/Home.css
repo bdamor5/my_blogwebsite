@@ -1,0 +1,17 @@
+.accord{
+    position: fixed;
+}
+
+.contents{
+    margin-left: 33%;
+}
+
+@media(max-width:680px) {
+    .accord{
+        margin-top: -38px;
+    }
+
+    .know-more{
+        margin-top: -38px;
+    }
+}
