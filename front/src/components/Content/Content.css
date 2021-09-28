@@ -30,3 +30,10 @@
     border: 1px solid lightskyblue;
     transition: all 500ms ease-in-out;
 }
+
+@media(max-width:680px) {
+    .heading{
+        font-size: 15px;
+        padding: 0 2%;
+    }
+}

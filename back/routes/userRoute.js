@@ -1,24 +1,24 @@
-import express from 'express'
+const express = require('express')
 const router = express.Router();
 
-import {Signup,Signin, allUsers, userprofile, updateProfile, deleteProfile, userSignedInProfile, Signout} from '../controllers/userControllers.js'
+const userCon = require('../controllers/userControllers')
 
-import {auth} from '../middlewares/auth.js'
+const auth = require('../middlewares/auth')
 
-router.post('/signup', Signup)
+router.post('/signup', userCon.Signup)
 
-router.post('/signin' , Signin)
+router.post('/signin' , userCon.Signin)
 
-router.get('/allusers',allUsers)
+router.get('/allusers',userCon.allUsers)
 
 // router.get('/profile/:id',auth,userprofile)
 
-router.put('/profile/update/:id',auth,updateProfile)
+router.put('/profile/update/:id',auth,userCon.updateProfile)
 
-router.delete('/profile/delete/:id',auth,deleteProfile)
+router.delete('/profile/delete/:id',auth,userCon.deleteProfile)
 
-router.get('/userSignedInProfile',auth,userSignedInProfile)
+router.get('/userSignedInProfile',auth,userCon.userSignedInProfile)
 
-router.get('/signout',auth,Signout)
+router.get('/signout',auth,userCon.Signout)
 
-export default router
+module.exports = router

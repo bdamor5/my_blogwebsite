@@ -1,20 +1,20 @@
-import express from "express";
+// import express from "express";
+const express = require('express')
 const router = express.Router()
 
-import { allBlogs, createBlog, deleteBlog, updateBlog, userBlogs,readBlog} from "../controllers/blogControllers.js";
-import {auth} from '../middlewares/auth.js'
-import storage from '../utils/fileUpload.js'
+const blogCon = require("../controllers/blogControllers");
+const auth = require('../middlewares/auth')
 
-router.post('/create',auth,storage.single('image'),createBlog)
+router.post('/create',auth,blogCon.createBlog)
 
-router.get('/all',allBlogs)
+router.get('/all',blogCon.allBlogs)
 
-router.post('/user-blogs',auth,userBlogs)
+router.post('/user-blogs',auth,blogCon.userBlogs)
 
-router.get('/readblog/:id',readBlog)
+router.get('/readblog/:id',blogCon.readBlog)
 
-router.put('/update/:id',auth,storage.single('image'),updateBlog)
+router.put('/update/:id',auth,blogCon.updateBlog)
 
-router.delete('/delete/:id',auth,deleteBlog)
+router.delete('/delete/:id',auth,blogCon.deleteBlog)
 
-export default router
+module.exports = router

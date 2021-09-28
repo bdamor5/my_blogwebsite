@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./WriteBlog.css";
 import { useHistory } from "react-router";
 import axios from "axios";
-import {NavLink} from 'react-router-dom'
+import { NavLink } from "react-router-dom";
 
 const WriteBlog = () => {
   const [blog, setBlog] = useState({
@@ -10,16 +10,20 @@ const WriteBlog = () => {
     description: "",
   });
 
-  const [useremail, setUserEmail] = useState();
-  const [username, setUserName] = useState();
+  const [useremail, setUserEmail] = useState('');
+  const [username, setUserName] = useState('');
   const [category, setCategory] = useState("Science");
   const [readTime, setReadTime] = useState("1 min");
 
   const [file, setFile] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
 
   const [signedOut, setsignedOut] = useState(false);
 
+  const [blogid , setBlogid] = useState('')
+
   useEffect(() => {
+    getSignedInUserProfile()
     setInterval(getSignedInUserProfile, 1000);
     document.documentElement.scrollTop = 0;
   }, []);
@@ -45,36 +49,62 @@ const WriteBlog = () => {
     setBlog({ ...blog, [name]: value });
   };
 
+  const handleImage = (e) => {
+    const imageFile = e.target.files[0];
+    setFile(imageFile);
+
+    previewFile(imageFile);
+  };
+
+  const previewFile = (imageFile) => {
+    const reader = new FileReader(); //FileReader is used to read the contents of a Blob or File.
+    reader.readAsDataURL(imageFile); //The result is a string with a data: URL representing the file's data.
+    reader.onloadend = () => {
+      //The FileReader.onloadend property contains an event handler executed when the content read with readAsArrayBuffer, readAsBinaryString, readAsDataURL or readAsText is available , i.e This event is triggered each time the reading operation is completed (either in success or failure).
+      // console.log(reader.result); //The FileReader result attribute contains the data as a dataURL representing the file's data as a base64 encoded string.
+      setPreviewImage(reader.result);
+    };
+  };
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
 
       if (!blog.title || !blog.description) {
         alert("Please Fill All The Details Correctly");
-      }else if(file) {
+      } else if (file) {
+        const res = await axios.get(
+          "http://localhost:8000/user/userSignedInProfile",
+          { withCredentials: true }
+        );
+  
+        setUserEmail(res.data.email);
+        setUserName(res.data.username);
+
+        const response = await axios.post(
+          "http://localhost:8000/blog/create",
+          {
+            title : blog.title,
+            description : blog.description,
+            readTime,
+            category,
+            useremail,
+            username,
+            image : previewImage,
+          },
+          { withCredentials: true }
+        );
+
+          setBlogid(response.data)
+          // console.log(response.data)
+
+          document.documentElement.scrollTop = 0;
           setWritten(true);
 
-          const data = new FormData();
-
-          data.append("title", blog.title);
-          data.append("description", blog.description);
-          data.append("readTime", readTime);
-          data.append("category", category);
-          data.append("useremail", useremail);
-          data.append("username", username);
-          data.append("image", file); //always at last
-
-          const response = await axios.post(
-            "http://localhost:8000/blog/create",
-            data,
-            { withCredentials: true }
-          );
-
-        }else {
-          alert("Please Upload An Image");
-        }
-    } catch (err) {
-    }
+      } else {
+        alert("Please Upload An Image");
+      }
+    } catch (err) {}
   };
 
   const history = useHistory();
@@ -85,7 +115,7 @@ const WriteBlog = () => {
         <div>
           <div class="alert alert-danger mx-auto" role="alert">
             <div class="d-flex justify-content-center align-items-center">
-              <p>User Signed Out ! Redirecting to Sign In...</p>
+              <p>User Session Timed Out ! Redirecting to Sign In...</p>
               <div
                 class="spinner-border ms-3"
                 role="status"
@@ -101,11 +131,11 @@ const WriteBlog = () => {
           </div>
         </div>
       )}
-      {written  && (
+      {written && (
         <div>
           <div class="alert alert-success mx-auto" role="alert">
             <div class="d-flex justify-content-center align-items-center">
-              <p>Blog Created ! Redirecting To Home Page...</p>
+              <p>Blog Created ! Redirecting To The Created Blog Page...</p>
               <div
                 class="spinner-border ms-3"
                 role="status"
@@ -116,26 +146,34 @@ const WriteBlog = () => {
           <div style={{ opacity: 0 }}>
             {(document.documentElement.scrollTop = 0)}
             {setTimeout(() => {
-
               setWritten(false);
-              history.push("/");
-              
+              history.push(`/blog/readblog/${blogid}`); 
             }, 3000)}
           </div>
         </div>
       )}
       <div className="container write">
         <form encType="multipart/form-data" onSubmit={(e) => handleSubmit(e)}>
-          
           <div className="upload">
-              <input
-                onChange={(e) => setFile(e.target.files[0])}
-                type="file"
-                id="image"
-                filename="image"
-                className="browse"
-              />
+            <input
+              onChange={(e) => handleImage(e)}
+              type="file"
+              id="image"
+              filename="image"
+              className="browse"
+            />
           </div>
+
+          {previewImage && (
+            <div className="container d-flex justify-content-center my-3">
+              <img
+                src={previewImage}
+                alt="uploaded"
+                className="img-fluid"
+                style={{ height: "200px" }}
+              />
+            </div>
+          )}
 
           <div className="category">
             <div class="input-group mb-3">
@@ -240,10 +278,10 @@ const WriteBlog = () => {
             <button className="btn btn-create" type="submit">
               Create
             </button>
-            
-            <NavLink exact to='/'>
-              <button className="btn btn-edit mx-2">Go Back</button>
-            </NavLink>                                                                      
+
+            <NavLink exact to="/">
+              <button className="btn btn-edit mx-2">Go To Home Page</button>
+            </NavLink>
           </div>
         </form>
       </div>

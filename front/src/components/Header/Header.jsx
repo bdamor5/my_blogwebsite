@@ -6,7 +6,7 @@ import axios from 'axios'
 
 const Header = () => {
 
-    const[signOut , setsignOut] = useState(false)
+    const[signOut , setsignOut] = useState()
     const[username,setUsername] = useState('')
     const history = useHistory()
 
@@ -22,6 +22,7 @@ const Header = () => {
             
             if(response.data.username){
                 setUsername(response.data.username)
+                setsignOut(false)
             }else{
                 setUsername('')
             }
@@ -41,16 +42,17 @@ const Header = () => {
     }
 
     return (
-        <div>{
-            username !== '' && signOut === false
-            ?(<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div>
+            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                 <div className="container">
                     <NavLink className="navbar-brand" to="/" exact>Kangaes  <span className='line'><img src={icon} alt="feather" /></span>  </NavLink>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        {
+                        signOut === false && username != ''
+                        ?<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className='nav-item'>
                                 <NavLink activeClassName='navlink-hover' className="nav-link" aria-current="page" to="/user/signout" exact onClick={handleSignout}>Signout</NavLink>
                             </li>
@@ -58,31 +60,21 @@ const Header = () => {
                                 <NavLink activeClassName='navlink-hover' className="nav-link" aria-current="page" to="/user/profile" exact><i className="far fa-user" title={`${username}'s profile`}></i></NavLink>
                             </li>
                         </ul>
-                    </div>
-                </div>
-            </nav>)
-            :(<nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div className="container">
-                    <NavLink className="navbar-brand" to="/" exact>Kangaes  <span className='line'><img src={icon} alt="feather" /></span>  </NavLink>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+                        :<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className='nav-item'>   
                                 <NavLink activeClassName='navlink-hover' className="nav-link" aria-current="page" to="/user/signup" exact>Signup</NavLink>
                             </li>
                             <li className='nav-item'>   
                                 <NavLink activeClassName='navlink-hover' className="nav-link" aria-current="page" to="/user/signin" exact>Signin</NavLink>
                             </li>
-                        </ul>
+                        </ul> 
+                        }
+                        
                     </div>
                 </div>
-            </nav>)
-        }
-           
+            </nav>           
             {
-                signOut
+                signOut && username === ''
                 ?(<div>
                         <div class="alert alert-danger mx-auto" role="alert">                        
                             <div class="d-flex justify-content-center align-items-center">

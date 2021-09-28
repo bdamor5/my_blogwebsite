@@ -15,6 +15,7 @@ const EditBlog = () => {
     const [edited , setEdited] = useState()
 
     const [file, setFile] = useState("");
+    const [previewImage, setPreviewImage] = useState("");
 
     const [signedOut , setsignedOut] = useState(false)
 
@@ -51,6 +52,23 @@ const EditBlog = () => {
         setBlog({...blog , [name] : value})
     }
 
+    const handleImage = (e) => {
+        const imageFile = e.target.files[0];
+        setFile(imageFile);
+    
+        previewFile(imageFile);
+      };
+    
+      const previewFile = (imageFile) => {
+        const reader = new FileReader(); //FileReader is used to read the contents of a Blob or File.
+        reader.readAsDataURL(imageFile); //The result is a string with a data: URL representing the file's data.
+        reader.onloadend = () => {
+          //The FileReader.onloadend property contains an event handler executed when the content read with readAsArrayBuffer, readAsBinaryString, readAsDataURL or readAsText is available , i.e This event is triggered each time the reading operation is completed (either in success or failure).
+          console.log(reader.result); //The FileReader result attribute contains the data as a dataURL representing the file's data as a base64 encoded string.
+          setPreviewImage(reader.result);
+        };
+      };
+
     const handleEdit = async(e) =>{
         try{
             e.preventDefault()
@@ -58,19 +76,22 @@ const EditBlog = () => {
             if(!blog.title || !blog.description){
                 alert('Please Fill All The Details Correctly')
             }else{
-                    
-                    const data = new FormData();
-          
-                    data.append("title", blog.title);
-                    data.append("description", blog.description);
-                    data.append("readTime", read);
-                    data.append("category", category);
-
                     if(file){
-                        data.append("image", file); //always at last
+                        await axios.put(`http://localhost:8000/blog/update/${params.id}?public_id=${blog.image_public_id}`,{
+                            title : blog.title,
+                            description : blog.description,
+                            readTime : read,
+                            category,
+                            image : previewImage
+                          },{withCredentials : true})
+                    }else{                    
+                        await axios.put(`http://localhost:8000/blog/update/${params.id}`,{
+                            title : blog.title,
+                            description : blog.description,
+                            readTime : read,
+                            category
+                          },{withCredentials : true})
                     }
-                    
-                    await axios.put(`http://localhost:8000/blog/update/${params.id}`,data,{withCredentials : true})
                     setEdited(true)
             }            
         }catch(err){
@@ -86,7 +107,7 @@ const EditBlog = () => {
             ?(<div>
                     <div class="alert alert-danger mx-auto" role="alert">                        
                         <div class="d-flex justify-content-center align-items-center">
-                            <p>User Signed Out ! Redirecting to Sign In...</p>
+                            <p>User Session Timed Out ! Redirecting to Sign In...</p>
                             <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                         </div>
                     </div>
@@ -127,15 +148,26 @@ const EditBlog = () => {
             <div className='container write'>
                 <form encType="multipart/form-data" onSubmit={(e) => handleEdit(e)}>
           
-                    <div className="upload">
-                        <input
-                            onChange={(e) => setFile(e.target.files[0])}
-                            type="file"
-                            id="image"
-                            filename="image"
-                            className="browse"
-                        />
+                <div className="upload">
+                    <input
+                    onChange={(e) => handleImage(e)}
+                    type="file"
+                    id="image"
+                    filename="image"
+                    className="browse"
+                    />
+                </div>
+
+                {previewImage && (
+                    <div className="container d-flex justify-content-center my-3">
+                    <img
+                        src={previewImage}
+                        alt="uploaded"
+                        className="img-fluid"
+                        style={{ height: "200px" }}
+                    />
                     </div>
+                )}
 
                 <div className='category'>
                     <select onChange={(e) => setCategory(e.target.value)} class="form-select" aria-label="Default select example">

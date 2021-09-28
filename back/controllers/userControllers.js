@@ -1,7 +1,11 @@
-import userModel from '../db/userSchema.js'
-import bcrypt from 'bcryptjs'
+// import userModel from '../db/userSchema.js'
+// import bcrypt from 'bcryptjs'
 
-export const Signup = async(req,res) => {
+const userModel = require('../db/userSchema')
+
+const bcrypt = require('bcryptjs')
+
+const Signup = async(req,res) => {
     try{
 
         const user = new userModel(req.body)
@@ -15,7 +19,7 @@ export const Signup = async(req,res) => {
     }
 }
 
-export const Signin = async(req,res) => {
+const Signin = async(req,res) => {
     try{
         const {email,password} = req.body;
 
@@ -50,7 +54,7 @@ export const Signin = async(req,res) => {
     }
 }
 
-export const allUsers = async(req,res) =>{
+const allUsers = async(req,res) =>{
     try{
             const allusers = await userModel.find({})
 
@@ -61,7 +65,7 @@ export const allUsers = async(req,res) =>{
     }
 }
 
-export const userprofile = async(req,res) =>{
+const userprofile = async(req,res) =>{
     try{
         const user = await userModel.findById(req.params.id);
 
@@ -72,7 +76,7 @@ export const userprofile = async(req,res) =>{
     }
 }
 
-export const updateProfile = async(req,res) =>{
+const updateProfile = async(req,res) =>{
     try{
         var {username,age,email,password} = req.body
         
@@ -98,7 +102,7 @@ export const updateProfile = async(req,res) =>{
     }
 }
 
-export const deleteProfile = async(req,res) =>{
+const deleteProfile = async(req,res) =>{
     try{
         const deletedUser = await userModel.findByIdAndDelete(req.params.id)
         res.status(200).json(deletedUser)
@@ -108,11 +112,11 @@ export const deleteProfile = async(req,res) =>{
     }
 }
 
-export const userSignedInProfile = async(req,res) =>{
+const userSignedInProfile = async(req,res) =>{
     res.json(req.tokenuser)
 }
 
-export const Signout = async(req,res) =>{
+const Signout = async(req,res) =>{
     try{
 
         res.clearCookie('jwtlogin', {path:'/'});
@@ -124,4 +128,15 @@ export const Signout = async(req,res) =>{
     }catch(err){
         res.status(400).send(err)
     }
+}
+
+module.exports = {
+    Signup,
+    Signin,
+    allUsers,
+    userprofile,
+    deleteProfile,
+    updateProfile,
+    userSignedInProfile,
+    Signout    
 }

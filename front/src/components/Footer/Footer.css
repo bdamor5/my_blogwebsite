@@ -66,3 +66,18 @@
         opacity: 0;
     }   
 }
+
+@media (max-width : 400px){
+
+    .cpy{
+        font-size: 12px;
+    }
+
+    .top{
+        font-size: 22px;
+    }
+
+    .top-text{
+        font-size: 15px;
+    }
+}

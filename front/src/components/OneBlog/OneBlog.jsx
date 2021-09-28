@@ -26,7 +26,7 @@ const OneBlog = ({blogtitle,blogcategory,blogreadTime,blogdescription,blogid,blo
   return (
     <>
       <div className="blog" title='Click on read more'>
-        <img src={`./uploads/${blogimage}`} alt="dummy" className="blogimg img-fluid" />
+        <img src={`${blogimage}`} alt="" className="blogimg img-fluid" />
         <h5>{blogtitle}</h5>
         <div className="cat-read">
           <h6>{blogcategory}</h6>

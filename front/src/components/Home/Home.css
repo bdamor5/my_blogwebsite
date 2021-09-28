@@ -8,6 +8,7 @@
 
 @media(max-width:680px) {
     .accord{
+        position:absolute;
         margin-top: -38px;
     }
 
@@ -15,3 +16,4 @@
         margin-top: -38px;
     }
 }
+

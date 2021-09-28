@@ -45,7 +45,7 @@ const ReadBlog = () => {
       
       const handleDelete = async() =>{
             try{
-                const response = await axios.delete(`http://localhost:8000/blog/delete/${params.id}`,{withCredentials : true})
+                const response = await axios.delete(`http://localhost:8000/blog/delete/${params.id}?public_id=${blog.image_public_id}`,{withCredentials : true})
 
                 setDeleteBlog(true)
             }catch(err){
@@ -82,13 +82,13 @@ const ReadBlog = () => {
         }
             <div className='blog-btn mt-5'>
                     <NavLink exact to='/'>
-                            <button className="btn btn-edit">Go Back</button>
+                            <button className="btn btn-edit">Go To Home Page</button>
                     </NavLink>                                                                      
             </div>
             <div className='container write'>                
 
                 <div className='display-image'>
-                    <img src={`/uploads/${blogimage}`} alt="demo" className='read-image' />
+                    <img src={`${blogimage}`} alt="" className='read-image' />
                 </div>
 
                 <div className='category-read'>

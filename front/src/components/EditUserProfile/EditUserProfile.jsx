@@ -93,7 +93,7 @@ const Signup = () => {
                 ?(<div>
                         <div class="alert alert-danger mx-auto" role="alert">                        
                             <div class="d-flex justify-content-center align-items-center">
-                                <p>User Signed Out ! Redirecting to Sign In...</p>
+                                <p>User Session Timed Out ! Redirecting to Sign In...</p>
                                 <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                             </div>
                         </div>

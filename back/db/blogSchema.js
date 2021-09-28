@@ -1,4 +1,6 @@
-import mongoose from 'mongoose'
+// import mongoose from 'mongoose'
+
+const mongoose = require('mongoose')
 
 const blogSchema = new mongoose.Schema({
     title : {
@@ -32,6 +34,9 @@ const blogSchema = new mongoose.Schema({
     image : {
         type : String,
         required : true
+    },
+    image_public_id : {
+        type : String
     }
 },{
     timestamps : true
@@ -39,4 +44,6 @@ const blogSchema = new mongoose.Schema({
 
 const blogModel = mongoose.model('Blog',blogSchema)
 
-export default blogModel
+// export default blogModel
+
+module.exports = blogModel

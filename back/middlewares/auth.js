@@ -1,7 +1,10 @@
-import jwt from 'jsonwebtoken'
-import userModel from '../db/userSchema.js'
+// import jwt from 'jsonwebtoken'
+// import userModel from '../db/userSchema.js'
 
-export const auth = async(req,res,next) =>{
+const jwt = require('jsonwebtoken')
+const userModel = require('../db/userSchema')
+
+const auth = async(req,res,next) =>{
     try{
         const cookietoken = req.cookies.jwtlogin
 
@@ -17,3 +20,5 @@ export const auth = async(req,res,next) =>{
         res.status(400).json(err)
     }
 }
+
+module.exports = auth
