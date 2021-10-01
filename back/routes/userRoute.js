@@ -15,6 +15,8 @@ router.get('/allusers',userCon.allUsers)
 
 router.put('/profile/update/:id',auth,userCon.updateProfile)
 
+router.put('/profile/update-password/:id',auth,userCon.updateProfilePassword)
+
 router.delete('/profile/delete/:id',auth,userCon.deleteProfile)
 
 router.get('/userSignedInProfile',auth,userCon.userSignedInProfile)

@@ -25,6 +25,7 @@
     text-align: center;
     color:black;
     padding: 1% 3%;
+    overflow: auto;
 }
 
 .blog .cat-read{

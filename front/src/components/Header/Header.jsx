@@ -13,18 +13,19 @@ const Header = () => {
 
     useEffect(() => { 
         getSignedInUserProfile() //to make the first fetch fast
-        setInterval(getSignedInUserProfile,2000) //to constantly check for the user sign in   
+        setInterval(getSignedInUserProfile,3000) //to constantly check for the user sign in   
     },[])
 
     const getSignedInUserProfile = async() =>{
         try{
             const response = await axios.get('http://localhost:8000/user/userSignedInProfile',{withCredentials : true})
-            
+
             if(response.data.username){
                 setUsername(response.data.username)
                 setsignOut(false)
+                                
             }else{
-                setUsername('')
+                setUsername('')                
             }
         }catch(err){
             setUsername('')
@@ -51,7 +52,7 @@ const Header = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         {
-                        signOut === false && username != ''
+                        signOut === false && username !== ''
                         ?<ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className='nav-item'>
                                 <NavLink activeClassName='navlink-hover' className="nav-link" aria-current="page" to="/user/signout" exact onClick={handleSignout}>Signout</NavLink>
@@ -78,14 +79,14 @@ const Header = () => {
                 ?(<div>
                         <div class="alert alert-danger mx-auto" role="alert">                        
                             <div class="d-flex justify-content-center align-items-center">
-                                <p>User Signed Out ! Redirecting to Sign In...</p>
+                                <p>User Signed Out ! Redirecting to Sign In Page...</p>
                                 <div class="spinner-border ms-3" role="status" aria-hidden="true"></div>
                             </div>
                         </div>
                         <div style={{opacity : 0}}>
                             {   
                                 setTimeout(() => {
-                                    setsignOut(false)
+                                    setsignOut()
                                     setUsername('')
                                     history.push('/user/signin')
                                 },3000)

@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react'
 import './Content.css'
 import laptop from './laptop.svg'
 import {NavLink} from 'react-router-dom'
-import { useSelector } from 'react-redux'
 import axios from 'axios'
 
 const Content = () => {
@@ -12,7 +11,6 @@ const Content = () => {
 
     useEffect(() => {
         getSignedInUserProfile() //to make the first fetch fast
-        setInterval(getSignedInUserProfile,3000) //to constantly check for the user sign in
     },[])
 
     const getSignedInUserProfile = async() =>{

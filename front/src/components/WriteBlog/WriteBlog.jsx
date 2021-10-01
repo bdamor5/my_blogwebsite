@@ -10,8 +10,8 @@ const WriteBlog = () => {
     description: "",
   });
 
-  const [useremail, setUserEmail] = useState('');
-  const [username, setUserName] = useState('');
+  const [useremail, setUserEmail] = useState("");
+  const [username, setUserName] = useState("");
   const [category, setCategory] = useState("Science");
   const [readTime, setReadTime] = useState("1 min");
 
@@ -20,11 +20,10 @@ const WriteBlog = () => {
 
   const [signedOut, setsignedOut] = useState(false);
 
-  const [blogid , setBlogid] = useState('')
+  const [blogid, setBlogid] = useState("");
 
   useEffect(() => {
-    getSignedInUserProfile()
-    setInterval(getSignedInUserProfile, 1000);
+    getSignedInUserProfile();
     document.documentElement.scrollTop = 0;
   }, []);
 
@@ -68,41 +67,44 @@ const WriteBlog = () => {
 
   const handleSubmit = async (e) => {
     try {
-      e.preventDefault();
+      getSignedInUserProfile();
 
-      if (!blog.title || !blog.description) {
-        alert("Please Fill All The Details Correctly");
-      } else if (file) {
-        const res = await axios.get(
-          "http://localhost:8000/user/userSignedInProfile",
-          { withCredentials: true }
-        );
-  
-        setUserEmail(res.data.email);
-        setUserName(res.data.username);
+      if (!signedOut) {
+        e.preventDefault();
 
-        const response = await axios.post(
-          "http://localhost:8000/blog/create",
-          {
-            title : blog.title,
-            description : blog.description,
-            readTime,
-            category,
-            useremail,
-            username,
-            image : previewImage,
-          },
-          { withCredentials: true }
-        );
+        if (!blog.title || !blog.description) {
+          alert("Please Fill All The Details Correctly");
+        } else if (file) {
+          const res = await axios.get(
+            "http://localhost:8000/user/userSignedInProfile",
+            { withCredentials: true }
+          );
 
-          setBlogid(response.data)
+          setUserEmail(res.data.email);
+          setUserName(res.data.username);
+
+          const response = await axios.post(
+            "http://localhost:8000/blog/create",
+            {
+              title: blog.title,
+              description: blog.description,
+              readTime,
+              category,
+              useremail,
+              username,
+              image: previewImage,
+            },
+            { withCredentials: true }
+          );
+
+          setBlogid(response.data);
           // console.log(response.data)
 
           document.documentElement.scrollTop = 0;
           setWritten(true);
-
-      } else {
-        alert("Please Upload An Image");
+        } else {
+          alert("Please Upload An Image");
+        }
       }
     } catch (err) {}
   };
@@ -115,7 +117,7 @@ const WriteBlog = () => {
         <div>
           <div class="alert alert-danger mx-auto" role="alert">
             <div class="d-flex justify-content-center align-items-center">
-              <p>User Session Timed Out ! Redirecting to Sign In...</p>
+              <p>User Session Timed Out , No Changes Made ! Redirecting to Sign In Page...</p>
               <div
                 class="spinner-border ms-3"
                 role="status"
@@ -124,6 +126,7 @@ const WriteBlog = () => {
             </div>
           </div>
           <div style={{ opacity: 0 }}>
+            {(document.documentElement.scrollTop = 0)}
             {setTimeout(() => {
               setsignedOut(false);
               history.push("/user/signin");
@@ -147,7 +150,7 @@ const WriteBlog = () => {
             {(document.documentElement.scrollTop = 0)}
             {setTimeout(() => {
               setWritten(false);
-              history.push(`/blog/readblog/${blogid}`); 
+              history.push(`/blog/readblog/${blogid}`);
             }, 3000)}
           </div>
         </div>

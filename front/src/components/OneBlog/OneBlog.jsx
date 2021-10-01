@@ -9,7 +9,6 @@ const OneBlog = ({blogtitle,blogcategory,blogreadTime,blogdescription,blogid,blo
 
     useEffect(() => { 
       getSignedInUserProfile() //to make the first fetch fast
-      setInterval(getSignedInUserProfile,3000) //to constantly check for the user sign in
     },[])
 
     const getSignedInUserProfile = async() =>{

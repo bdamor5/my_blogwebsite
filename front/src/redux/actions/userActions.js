@@ -6,11 +6,12 @@ export const userSignup = (userInfo) => async(dispatch,getState) => {
 
         dispatch({type: USER_SIGNUP_PENDING})
 
-        await axios.post('http://localhost:8000/user/signup',userInfo,{withCredentials : true})
-        
-        dispatch({type : USER_SIGNUP_SUCCESS , payload : 201})
+        var res = await axios.post('http://localhost:8000/user/signup',userInfo,{withCredentials : true})
+
+        // console.log('2' , res.status)
+        dispatch({type : USER_SIGNUP_SUCCESS , payload : res.status})
     }catch(err){
-        dispatch({type : USER_SIGNUP_FAILED , payload : 400})
+        dispatch({type : USER_SIGNUP_FAILED , payload : res.status})
     }
 }
 

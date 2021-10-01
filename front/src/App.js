@@ -13,6 +13,7 @@ import ReadBlog from './components/ReadBlog/ReadBlog'
 import EditBlog from './components/EditBlog/EditBlog'
 import SeeUserProfile from "./components/SeeUserProfile/SeeUserProfile";
 import EditUserProfile from './components/EditUserProfile/EditUserProfile'
+import EditUserPassword from "./components/EditUserPassword/EditUserPassword";
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
             <Route exact path="/user/signup" component={Signup} />
             <Route exact path="/user/profile" component={SeeUserProfile} />
             <Route exact path="/user/edit-profile/:id" component={EditUserProfile} />
+            <Route exact path="/user/edit-password/:id" component={EditUserPassword} />
             <Route exact path="/blog/writeblog" component={WriteBlog} />
             <Route exact path='/blog/readblog/:id' component={ReadBlog} />
             <Route exact path='/blog/editblog/:id' component={EditBlog} />
